@@ -4,7 +4,7 @@ import "./globals.css"
 const RootLayout = ({children}) => {
   return (
     <html lang='en'>
-      <body>
+      <body cz-shortcut-listen="true">
         ROot
         {children}
       </body>
