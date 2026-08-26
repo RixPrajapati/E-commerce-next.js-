@@ -1,12 +1,7 @@
-import React from 'react'
+import React from "react";
 
-const ProductsCard
- = () => {
-  return (
-    <div>ProductsCard
-      
-    </div>
-  )
-}
+const ProductsCard = () => {
+  return <div>ProductsCard</div>;
+};
 
-export default ProductsCard
+export default ProductsCard;
