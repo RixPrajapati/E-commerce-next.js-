@@ -1,9 +1,10 @@
-import React from 'react'
+const ProductPage = async () => {
+  const products = await fetch(
+    "https://mern-20260320-api.vercel.app/api/products",
+  ).then((res) => res.json());
+  console.log(products)
 
-const ProductPage = () => {
-  return (
-    <div>ProductPage</div>
-  )
-}
+  return <div>ProductPage</div>;
+};
 
-export default ProductPage
+export default ProductPage;
