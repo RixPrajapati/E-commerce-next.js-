@@ -1,15 +1,17 @@
-import React from "react";
+import { navMenu } from "@/constants/routes.js";
+import Link from "next/link";
 
 const Header = () => {
   return (
     <header>
       <nav className=" sticky w-full z-20 top-0 inset-s-0 shadow">
         <div className="max-w-7xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <a
+          <Link
+            href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
             Logo
-          </a>
+          </Link>
           <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
             <button
               type="button"
@@ -17,70 +19,19 @@ const Header = () => {
             >
               Get started
             </button>
-            <button
-              data-collapse-toggle="navbar-sticky"
-              type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-body rounded-base md:hidden hover:bg-neutral-secondary-soft hover:text-heading focus:outline-none focus:ring-2 focus:ring-neutral-tertiary"
-              aria-controls="navbar-sticky"
-              aria-expanded="false"
-            >
-              <span className="sr-only">Open main menu</span>
-              <svg
-                className="w-6 h-6"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width={24}
-                height={24}
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeWidth={2}
-                  d="M5 7h14M5 12h14M5 17h14"
-                />
-              </svg>
-            </button>
           </div>
-          <div
-            className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
-            id="navbar-sticky"
-          >
+          <div className="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
             <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-default rounded-base bg-neutral-secondary-soft md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 ">
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3  rounded-sm md:bg-transparent md:text-fg-brand md:p-0"
-                  aria-current="page"
-                >
-                  Home
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
-                >
-                  About
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
-                >
-                  Services
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="block py-2 px-3 text-heading rounded hover:bg-neutral-tertiary md:hover:bg-transparent md:border-0 md:hover:text-fg-brand md:p-0 md:dark:hover:bg-transparent"
-                >
-                  Contact
-                </a>
-              </li>
+              {navMenu.map((menu) => (
+                <li key={menu.route}>
+                  <Link
+                    href={menu.route}
+                    className="block py-2 px-3 rounded-sm md:bg-transparent md:text-fg-brand md:p-0"
+                  >
+                    {menu.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
