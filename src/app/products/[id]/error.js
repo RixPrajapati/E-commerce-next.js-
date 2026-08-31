@@ -1,9 +1,12 @@
-'use client'
+"use client";
 
-const error = ({error}) => {
-  return (
-    <div>{error.message}</div>
-  )
-}
+import { PRODUCTS_ROUTE } from "@/constants/routes";
+import { useRouter } from "next/navigation";
 
-export default error
+const error = ({ error }) => {
+  const route = useRouter();
+  setTimeout(route.push(PRODUCTS_ROUTE), 5000);
+  return <div>{error.message}</div>;
+};
+
+export default error;
