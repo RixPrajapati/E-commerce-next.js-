@@ -31,7 +31,7 @@ const ProductDetail = async ({ params }) => {
         alt={product.name}
         height={400}
         width={600}
-        className="w-full h-64"
+        className="w-auto h-64"
       />
       <h1 className="text-3xl">Product name : {product.name}</h1>
       <p>Product category : {product.category}</p>

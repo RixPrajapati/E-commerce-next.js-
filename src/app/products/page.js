@@ -1,3 +1,4 @@
+import { getProducts } from "@/api/products";
 import Link from "next/link";
 
 export const metadata = {
@@ -5,8 +6,7 @@ export const metadata = {
 };
 
 const ProductPage = async ({ searchParams }) => {
-  const res = await fetch("https://e-commerce-rix.vercel.app/api/products");
-  const products = await res.json();
+  const products = await getProducts();
   // console.log(products);
   // console.log(await searchParams);
 
