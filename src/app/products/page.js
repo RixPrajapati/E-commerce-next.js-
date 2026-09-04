@@ -1,6 +1,7 @@
 import { getProducts } from "@/api/products";
 import Link from "next/link";
 import ProductsCard from "./_components/Card";
+import { LoadingCard } from "./loading";
 
 export const metadata = {
   title: "Products",
