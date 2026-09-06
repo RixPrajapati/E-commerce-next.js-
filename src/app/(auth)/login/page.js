@@ -1,9 +1,23 @@
+"use client";
 import React from "react";
 import SocialLogins from "../_components/SocialLogins";
 import Link from "next/link";
 import { REGISTER_ROUTE } from "@/constants/routes";
+import { useForm } from "react-hook-form";
+import { login } from "@/api/products";
 
 const LoginPage = () => {
+  const { register, handleSubmit } = useForm();
+
+  function submitForm(data) {
+    login(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+    console.log(data);
+  }
+
   return (
     <section className="min-h-[80vh] flex items-center justify-center">
       <div className="w-full px-6 py-10 sm:px-10 lg:px-12">
@@ -20,7 +34,7 @@ const LoginPage = () => {
           <SocialLogins />
 
           {/* Form */}
-          <form className="space-y-5">
+          <form className="space-y-5" onSubmit={handleSubmit(submitForm)}>
             {/* Email */}
             <div>
               <label
@@ -38,6 +52,7 @@ const LoginPage = () => {
           text-dark outline-none transition
           placeholder:text-gray-400
           focus:border-accent focus:ring-2 focus:ring-accent/20"
+                {...register("email")}
               />
             </div>
 
@@ -67,6 +82,7 @@ const LoginPage = () => {
           text-dark outline-none transition
           placeholder:text-gray-400
           focus:border-accent focus:ring-2 focus:ring-accent/20"
+                {...register("password")}
               />
             </div>
 

@@ -10,9 +10,13 @@
   },
   "dependencies": {
     "axios": "^1.20.0",
+    "install": "^0.13.0",
     "next": "16.3.2",
+    "npm": "^11.19.1",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "react-hook-form": "^7.87.0",
+    "zustand": "^5.0.15"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
