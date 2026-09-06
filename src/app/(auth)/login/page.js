@@ -5,15 +5,19 @@ import { REGISTER_ROUTE } from "@/constants/routes";
 
 const LoginPage = () => {
   return (
-    <section>
-      <div className="flex flex-col justify-center px-6 py-10 sm:px-10 lg:px-12">
+    <section className="min-h-[80vh] flex items-center justify-center">
+      <div className="w-full px-6 py-10 sm:px-10 lg:px-12">
         <div className="mx-auto w-full max-w-md">
+          {/* Login content */}
+
           {/* Heading */}
           <div className="mb-8">
-            <h1 className="text-xl font-bold text-dark">Login to your account</h1>
+            <h1 className="text-xl font-bold text-dark">
+              Login to your account
+            </h1>
           </div>
 
-        <SocialLogins/>
+          <SocialLogins />
 
           {/* Form */}
           <form className="space-y-5">
@@ -49,7 +53,7 @@ const LoginPage = () => {
 
                 <Link
                   href="#"
-                  className="text-sm font-medium text-primary hover:text-primary-dark"
+                  className="text-sm font-medium text-primary hover:text-primary-dark hover:underline"
                 >
                   Forgot password?
                 </Link>
@@ -96,7 +100,7 @@ const LoginPage = () => {
             Don't have an account?{" "}
             <Link
               href={REGISTER_ROUTE}
-              className="font-semibold text-primary hover:text-primary-dark"
+              className="font-semibold text-primary hover:text-primary-dark hover:underline"
             >
               Create an account
             </Link>
