@@ -11,3 +11,7 @@ export const login=async(data)=>{
     return res.data
 }
 
+export const singUp=async(data)=>{
+    const res=await axios.post(`${config.appUrl}/api/auth/register`,data);
+    return res.data
+}
