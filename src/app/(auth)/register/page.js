@@ -5,6 +5,7 @@ import React from "react";
 import SocialLogins from "../_components/SocialLogins";
 import { useForm } from "react-hook-form";
 import { singUp } from "@/api/products";
+import PasswordInput from "@/components/PasswordInput";
 
 const RegisterPage = () => {
   const { register, handleSubmit } = useForm();
@@ -143,16 +144,7 @@ const RegisterPage = () => {
                 Password
               </label>
 
-              <input
-                id="password"
-                type="password"
-                placeholder="Create a password"
-                className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2
-            text-sm text-dark outline-none transition
-            placeholder:text-gray-400
-            focus:border-accent focus:ring-2 focus:ring-accent/20"
-                {...register("password")}
-              />
+              <PasswordInput id="password" {...register('password')}/>
             </div>
 
             {/* Terms */}

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { REGISTER_ROUTE } from "@/constants/routes";
 import { useForm } from "react-hook-form";
 import { login } from "@/api/products";
+import PasswordInput from "@/components/PasswordInput";
 
 const LoginPage = () => {
   const { register, handleSubmit } = useForm();
@@ -74,16 +75,7 @@ const LoginPage = () => {
                 </Link>
               </div>
 
-              <input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3
-          text-dark outline-none transition
-          placeholder:text-gray-400
-          focus:border-accent focus:ring-2 focus:ring-accent/20"
-                {...register("password")}
-              />
+              <PasswordInput id="password" {...register('password')}/>
             </div>
 
             {/* Remember me */}

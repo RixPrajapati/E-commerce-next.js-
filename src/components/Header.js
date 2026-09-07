@@ -20,7 +20,7 @@ const Header = () => {
               width={32}
               className="h-9"
             />
-            <h1 className="text-2xl font-bold mt-1 text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text">
+            <h1 className="text-xl md:text-2xl font-bold mt-1 text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text">
               FashionWear
             </h1>
           </div>
