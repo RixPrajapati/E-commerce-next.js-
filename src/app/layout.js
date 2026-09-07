@@ -1,6 +1,7 @@
 import React from 'react';
 import "./globals.css"
 import Header from '@/components/Header';
+import { ToastContainer } from 'react-toastify';
 
 export const metadata={
   title:{
@@ -17,6 +18,7 @@ const RootLayout = ({children}) => {
       <body className='light'>
         <Header/>
         {children}
+        <ToastContainer position='top-center' autoClose={1500} />
       </body>
     </html>
   )

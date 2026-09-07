@@ -8,6 +8,7 @@ import { login } from "@/api/products";
 import PasswordInput from "@/components/PasswordInput";
 import useAuthStore from "@/stores/authstore";
 import Spinner from "@/components/Spinner";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   const { register, handleSubmit } = useForm();
@@ -16,12 +17,16 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
 
   function submitForm(data) {
+    setLoading(true);
     login(data)
       .then((res) => {
-        loginUser(res);
-        setLoading(true);
+        loginUser(res.data);
+        toast.success("Login Successful!")
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data);
+      })
       .finally(() => setLoading(false));
   }
 
@@ -104,7 +109,7 @@ const LoginPage = () => {
         font-semibold text-white transition
         hover:bg-primary-dark
         focus:outline-none focus:ring-2 focus:ring-primary/30 relative disabled:opacity-60"
-        disabled={loading}
+              disabled={loading}
             >
               Login
               {loading && (

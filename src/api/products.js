@@ -7,11 +7,10 @@ export const getProducts=async ()=>{
 }
 
 export const login=async(data)=>{
-    const res=await axios.post(`${config.appUrl}/api/auth/login`,data);
-    return res.data
+    return await axios.post(`${config.appUrl}/api/auth/login`,data);
+    
 }
 
 export const singUp=async(data)=>{
-    const res=await axios.post(`${config.appUrl}/api/auth/register`,data);
-    return res.data
+    return await axios.post(`${config.appUrl}/api/auth/register`,data);
 }
