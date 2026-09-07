@@ -1,22 +1,28 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import SocialLogins from "../_components/SocialLogins";
 import Link from "next/link";
 import { REGISTER_ROUTE } from "@/constants/routes";
 import { useForm } from "react-hook-form";
 import { login } from "@/api/products";
 import PasswordInput from "@/components/PasswordInput";
+import useAuthStore from "@/stores/authstore";
+import Spinner from "@/components/Spinner";
 
 const LoginPage = () => {
   const { register, handleSubmit } = useForm();
 
+  const { loginUser } = useAuthStore();
+  const [loading, setLoading] = useState(false);
+
   function submitForm(data) {
     login(data)
       .then((res) => {
-        console.log(res);
+        loginUser(res);
+        setLoading(true);
       })
-      .catch((err) => console.log(err));
-    console.log(data);
+      .catch((err) => console.log(err))
+      .finally(() => setLoading(false));
   }
 
   return (
@@ -75,7 +81,7 @@ const LoginPage = () => {
                 </Link>
               </div>
 
-              <PasswordInput id="password" {...register('password')}/>
+              <PasswordInput id="password" {...register("password")} />
             </div>
 
             {/* Remember me */}
@@ -97,9 +103,13 @@ const LoginPage = () => {
               className="w-full rounded-lg bg-primary px-4 py-3
         font-semibold text-white transition
         hover:bg-primary-dark
-        focus:outline-none focus:ring-2 focus:ring-primary/30"
+        focus:outline-none focus:ring-2 focus:ring-primary/30 relative disabled:opacity-60"
+        disabled={loading}
             >
               Login
+              {loading && (
+                <Spinner className="absolute top-1/2 -translate-y-1/2 right-3 w-6! h-6! fill-primary" />
+              )}
             </button>
           </form>
 
