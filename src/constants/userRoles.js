@@ -1,0 +1,3 @@
+export const ROLES_ADMIN='ADMIN'
+export const ROLES_CUSTOMER='CUSTOMER'
+export const ROLES_MERCHANT='MERCHANT'
