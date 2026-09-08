@@ -10,7 +10,7 @@ const Header = () => {
   const pathName = usePathname();
   return (
     <header className="py-4 shadow-md bg-white dark:bg-gray-950 sticky top-0 z-10">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto lg:px-4">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Image
@@ -20,7 +20,7 @@ const Header = () => {
               width={32}
               className="h-9"
             />
-            <h1 className="text-xl md:text-2xl font-bold mt-1 text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text">
+            <h1 className="text-xl lg:text-2xl font-bold mt-1 text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text">
               FashionWear
             </h1>
           </div>

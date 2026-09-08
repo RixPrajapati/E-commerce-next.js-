@@ -1,25 +1,48 @@
 "use client";
 import { LOGIN_ROUTE } from "@/constants/routes";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import SocialLogins from "../_components/SocialLogins";
 import { useForm } from "react-hook-form";
-import { singUp } from "@/api/products";
+import { signUp } from "@/api/products";
 import PasswordInput from "@/components/PasswordInput";
+import useAuthStore from "@/stores/authstore";
+import { toast } from "react-toastify";
+import Spinner from "@/components/Spinner";
 
 const RegisterPage = () => {
   const { register, handleSubmit } = useForm();
 
-  function formSubmit(data) {
-    singUp({
+  const { registerUser } = useAuthStore.getState();
+  const [loading, setLoading] = useState(false);
+
+  function submitForm(data) {
+    setLoading(true);
+
+    signUp({
       ...data,
       address: {
-        city: data.city,
         province: data.province,
+        city: data.city,
       },
     })
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+      .then((res) => {
+        console.log("REGISTER RESPONSE:", res.data);
+
+        registerUser({
+          ...res.data,
+          address: {
+            province: data.province,
+            city: data.city,
+          },
+        });
+
+        toast.success("Registration Successful!");
+      })
+      .catch((err) => {
+        toast.error(err.response?.data?.message || "Registration failed");
+      })
+      .finally(() => setLoading(false));
   }
 
   return (
@@ -34,7 +57,7 @@ const RegisterPage = () => {
           <SocialLogins />
 
           {/* Register Form */}
-          <form className="space-y-3" onSubmit={handleSubmit(formSubmit)}>
+          <form className="space-y-3" onSubmit={handleSubmit(submitForm)}>
             {/* Name */}
             <div>
               <label
@@ -144,7 +167,7 @@ const RegisterPage = () => {
                 Password
               </label>
 
-              <PasswordInput id="password" {...register('password')}/>
+              <PasswordInput id="password" {...register("password")} />
             </div>
 
             {/* Terms */}
@@ -170,12 +193,16 @@ const RegisterPage = () => {
             {/* Button */}
             <button
               type="submit"
-              className="w-full rounded-lg bg-primary px-3 py-2.5
-          text-sm font-semibold text-white transition
-          hover:bg-primary-dark
-          focus:outline-none focus:ring-2 focus:ring-primary/30"
+              className="w-full rounded-lg bg-primary px-4 py-3
+        font-semibold text-white transition
+        hover:bg-primary-dark
+        focus:outline-none focus:ring-2 focus:ring-primary/30 relative disabled:opacity-60"
+              disabled={loading}
             >
               Create Account
+              {loading && (
+                <Spinner className="absolute top-1/2 -translate-y-1/2 right-3 w-6! h-6! fill-primary" />
+              )}
             </button>
           </form>
 
