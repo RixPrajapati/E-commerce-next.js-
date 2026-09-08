@@ -2,26 +2,30 @@
 import React, { useState } from "react";
 import SocialLogins from "../_components/SocialLogins";
 import Link from "next/link";
-import { REGISTER_ROUTE } from "@/constants/routes";
+import { HOME_ROUTE, REGISTER_ROUTE } from "@/constants/routes";
 import { useForm } from "react-hook-form";
 import { login } from "@/api/products";
 import PasswordInput from "@/components/PasswordInput";
 import useAuthStore from "@/stores/authstore";
 import Spinner from "@/components/Spinner";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
   const { register, handleSubmit } = useForm();
 
   const { loginUser } = useAuthStore();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   function submitForm(data) {
     setLoading(true);
     login(data)
       .then((res) => {
         loginUser(res.data);
-        toast.success("Login Successful!")
+        toast.success("Login Successful!");
+
+        router.push(HOME_ROUTE);
       })
       .catch((err) => {
         console.log(err);

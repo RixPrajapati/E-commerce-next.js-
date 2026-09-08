@@ -1,8 +1,26 @@
+"use client";
+
+import Header from "@/components/Header";
+import useAuthStore from "@/stores/authstore";
+
 import Image from "next/image";
-import React from "react";
+import React, { useEffect } from "react";
 import hero from "@/assets/images/auth-hero.jpg";
+import { useRouter } from "next/navigation";
+import { HOME_ROUTE } from "@/constants/routes";
 
 const Layout = ({ children }) => {
+  const { isAuthentication } = useAuthStore.getState();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthentication) {
+      router.push(HOME_ROUTE);
+    }
+  }, []);
+  if (isAuthentication) {
+    return;
+    }
   return (
     <section className="py-12 px-4">
       <div className="container px-4 mx-auto">

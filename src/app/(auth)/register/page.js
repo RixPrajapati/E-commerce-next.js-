@@ -1,5 +1,5 @@
 "use client";
-import { LOGIN_ROUTE } from "@/constants/routes";
+import { HOME_ROUTE, LOGIN_ROUTE } from "@/constants/routes";
 import Link from "next/link";
 import React, { useState } from "react";
 import SocialLogins from "../_components/SocialLogins";
@@ -9,12 +9,15 @@ import PasswordInput from "@/components/PasswordInput";
 import useAuthStore from "@/stores/authstore";
 import { toast } from "react-toastify";
 import Spinner from "@/components/Spinner";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
   const { register, handleSubmit } = useForm();
 
   const { registerUser } = useAuthStore.getState();
   const [loading, setLoading] = useState(false);
+  
+    const router = useRouter();
 
   function submitForm(data) {
     setLoading(true);
@@ -27,20 +30,13 @@ const RegisterPage = () => {
       },
     })
       .then((res) => {
-        console.log("REGISTER RESPONSE:", res.data);
-
-        registerUser({
-          ...res.data,
-          address: {
-            province: data.province,
-            city: data.city,
-          },
-        });
+        registerUser(res.data);
 
         toast.success("Registration Successful!");
+        router.push(HOME_ROUTE);
       })
       .catch((err) => {
-        toast.error(err.response?.data?.message || "Registration failed");
+        toast.error(err.response?.data || "Registration failed");
       })
       .finally(() => setLoading(false));
   }
