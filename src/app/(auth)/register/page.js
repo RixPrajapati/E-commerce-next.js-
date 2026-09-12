@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import SocialLogins from "../_components/SocialLogins";
 import { useForm } from "react-hook-form";
-import { signUp } from "@/api/products";
+import { signUp } from "@/api/auth";
 import PasswordInput from "@/components/PasswordInput";
 import useAuthStore from "@/stores/authstore";
 import { toast } from "react-toastify";
