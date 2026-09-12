@@ -1,17 +1,55 @@
 "use client";
 
+import { createProduct } from "@/api/products";
+import Spinner from "@/components/Spinner";
 import Image from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FaCloudArrowUp } from "react-icons/fa6";
+import { toast } from "react-toastify";
 
 const ProductForm = () => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+
+  const [loading, setLoading] = useState(false);
   const [productImages, setProductImages] = useState([]);
   const [localImageUrls, setLocalImageUrls] = useState([]);
 
+  function prepareData(data) {
+    const fromData = new FormData();
+
+    fromData.append("name", data.name);
+    fromData.append("brand", data.brand);
+    fromData.append("category", data.category);
+    fromData.append("price", data.price);
+    fromData.append("stock", data.stock);
+
+    if (data.description) fromData.append("description", data.description);
+
+    if (productImages.length > 0) {
+      productImages.map((image) => {
+        fromData.append("images", image);
+      });
+    }
+    return fromData;
+  }
+
   function formSubmit(data) {
-    console.log(data);
+    setLoading(true);
+    const input = prepareData(data);
+
+    createProduct(input)
+      .then((res) => {
+        toast.success("Product added successfully.");
+        setProductImages([]);
+        setLocalImageUrls([]);
+        reset();
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err.response.data);
+      })
+      .finally(() => setLoading(false));
   }
   return (
     <form onSubmit={handleSubmit(formSubmit)}>
@@ -174,9 +212,13 @@ const ProductForm = () => {
       </div>
       <button
         type="submit"
-        className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary rounded-lg focus:ring-4 focus:ring-primary/20 dark:focus:ring-primary-900 hover:bg-primary/90"
+        className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary rounded-lg focus:ring-4 focus:ring-primary/20 dark:focus:ring-primary-900 hover:bg-primary/90 relative disabled:opacity-60 disabled:w-35"
+        disabled={loading}
       >
         Add product
+        {loading && (
+          <Spinner className="absolute top-1/2 -translate-y-1/2 right-3 w-6! h-6! fill-primary" />
+        )}{" "}
       </button>
     </form>
   );

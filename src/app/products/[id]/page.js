@@ -36,6 +36,7 @@ const ProductDetail = async ({ params }) => {
       <h1 className="text-3xl">Product name : {product.name}</h1>
       <p>Product category : {product.category}</p>
       <p>Product price : {product.price}</p>
+      <p>Product description : {product.description}</p>
     </div>
   );
 };

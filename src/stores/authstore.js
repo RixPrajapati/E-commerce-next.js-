@@ -7,17 +7,21 @@ const useAuthStore = create(
       user: null,
       isAuthentication: false,
 
-      loginUser: (user) =>
+      loginUser: (user) => {
         set({
           user,
           isAuthentication: true,
-        }),
+        });
+        localStorage.setItem("authToken", user.token);
+      },
 
-      registerUser: (user) =>
+      registerUser: (user) => {
         set({
           user,
           isAuthentication: true,
-        }),
+        });
+        localStorage.setItem("authToken", user.token);
+      },
 
       logoutUser: () =>
         set({
