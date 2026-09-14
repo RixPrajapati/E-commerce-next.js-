@@ -8,6 +8,11 @@ export const REGISTER_ROUTE= '/register';
 // export const REGISTER_ROUTE= '/forget-password';
 
 
+//Admin routes
+export const PRODUCT_MANAGEMENT_ROUTE='/product-management'
+export const PRODUCT_MANAGEMENT_ADD_ROUTE='/product-management/add'
+
+
 
 export const navMenu=[
     {
