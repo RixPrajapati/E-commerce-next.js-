@@ -1,9 +1,11 @@
 "use client";
 
 import { getProducts } from "@/api/products";
+import { format } from "date-fns";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { FaCog, FaEye, FaImage } from "react-icons/fa";
+import { FaCog, FaEye, FaImage, FaTrash } from "react-icons/fa";
+import { FaPencil } from "react-icons/fa6";
 
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
@@ -77,15 +79,20 @@ const ProductsTable = () => {
               </td>
               <td className="px-4 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
                 <div className="flex items-center">
-                  <div className={`inline-block w-4 h-4 mr-2 ${product.stock>10? "bg-green-700":"bg-red-700"}  rounded-full`} />
+                  <div
+                    className={`inline-block w-4 h-4 mr-2 ${product.stock > 10 ? "bg-green-700" : "bg-red-700"}  rounded-full`}
+                  />
                   {product.stock}
                 </div>
               </td>
               <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {product.createdAt}
+                {format(product.createdAt, "dd MMM, yyyy")}
               </td>
               <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                <FaEye />
+                <div className="flex gap-2">
+                  <FaPencil className="text-blue-600" />
+                  <FaTrash className="text-red-600"/>
+                </div>
               </td>
             </tr>
           ))}
