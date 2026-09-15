@@ -1,37 +1,44 @@
 "use client";
 
-import { getProducts } from "@/api/products";
+import { deleteProduct, getProducts } from "@/api/products";
 import Spinner from "@/components/Spinner";
 import { PRODUCT_MANAGEMENT_ROUTE } from "@/constants/routes";
 import useAuthStore from "@/stores/authstore";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaCog, FaEye, FaImage, FaTrash } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
+import { toast } from "react-toastify";
 
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const {user}=useAuthStore.getState();
+  const { user } = useAuthStore.getState();
+  const router = useRouter();
 
-  useEffect(() => {
-    setLoading(true);
-    getProducts({userId:user.id})
+  function fetchProducts(){
+setLoading(true);
+    getProducts({ userId: user.id })
       .then((data) => {
         setProducts(data);
       })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
+  }
+
+  useEffect(() => {
+    fetchProducts();
   }, []);
 
-  if(loading)
-  return (
-    <div className="flex justify-center">
-      <Spinner className={'fill-primary'}></Spinner>
-    </div>
-  );
+  if (loading)
+    return (
+      <div className="flex justify-center">
+        <Spinner className={"fill-primary"}></Spinner>
+      </div>
+    );
 
   return (
     <div className="overflow-x-auto">
@@ -62,62 +69,84 @@ const ProductsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <tr
-              key={product._id}
-              className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-            >
-              <th
-                scope="row"
-                className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+          {products.length === 0 ? (
+            <div className="flex justify-center">
+              <h2 className="text-gray-500 dark:text-gray-400">
+                No products found.
+              </h2>
+            </div>
+          ) : (
+            products.map((product) => (
+              <tr
+                key={product._id}
+                className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
               >
-                {product.imageUrls.length > 0 ? (
-                  <Image
-                    src={product.imageUrls[0]}
-                    alt={product.name}
-                    className="w-8 h-8 mr-3 object-cover rounded"
-                    width={64}
-                    height={64}
-                  />
-                ) : (
-                  <FaImage className="w-8 h-8 mr-3 rounded text-gray-500" />
-                )}
-                <span className="font-medium">{product.name}</span>
-              </th>
-              <td className="px-4 py-2">
-                <span className="bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
-                  {product.category}
-                </span>
-              </td>
-              <td className="px-4 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                {product.brand}
-              </td>
-              <td className="px-4 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                Rs. {product.price}
-              </td>
-              <td className="px-4 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
-                <div className="flex items-center">
-                  <div
-                    className={`inline-block w-4 h-4 mr-2 ${product.stock > 10 ? "bg-green-700" : "bg-red-700"}  rounded-full`}
-                  />
-                  {product.stock}
-                </div>
-              </td>
-              <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                {format(product.createdAt, "dd MMM, yyyy")}
-              </td>
-              <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                <div className="flex gap-2">
-                  <Link
-                    href={`${PRODUCT_MANAGEMENT_ROUTE}/${product._id}/edit`}
-                  >
-                    <FaPencil className="text-blue-600" />
-                  </Link>
-                  <FaTrash className="text-red-600" />
-                </div>
-              </td>
-            </tr>
-          ))}
+                <th
+                  scope="row"
+                  className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  {product.imageUrls.length > 0 ? (
+                    <Image
+                      src={product.imageUrls[0]}
+                      alt={product.name}
+                      className="w-8 h-8 mr-3 object-cover rounded"
+                      width={64}
+                      height={64}
+                    />
+                  ) : (
+                    <FaImage className="w-8 h-8 mr-3 rounded text-gray-500" />
+                  )}
+                  <span className="font-medium">{product.name}</span>
+                </th>
+                <td className="px-4 py-2">
+                  <span className="bg-primary/10 text-primary text-xs font-medium px-2 py-0.5 rounded dark:bg-primary-900 dark:text-primary-300">
+                    {product.category}
+                  </span>
+                </td>
+                <td className="px-4 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                  {product.brand}
+                </td>
+                <td className="px-4 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                  Rs. {product.price}
+                </td>
+                <td className="px-4 py-2 font-medium text-gray-500 whitespace-nowrap dark:text-white">
+                  <div className="flex items-center">
+                    <div
+                      className={`inline-block w-4 h-4 mr-2 ${product.stock > 10 ? "bg-green-700" : "bg-red-700"}  rounded-full`}
+                    />
+                    {product.stock}
+                  </div>
+                </td>
+                <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {format(product.createdAt, "dd MMM, yyyy")}
+                </td>
+                <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <div className="flex gap-2">
+                    <Link
+                      href={`${PRODUCT_MANAGEMENT_ROUTE}/${product._id}/edit`}
+                    >
+                      <FaPencil className="text-blue-600" />
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (confirm("Are sure you want to delete?"))
+                          deleteProduct(product._id).then(() => {
+                            toast.success("Product deleted successfully");
+                            fetchProducts();
+                          }).catch((err)=>{
+                            console.log(err);
+                            toast.error(err.response.data)
+                          });
+                      }}
+                    >
+                      <FaTrash className="text-red-600" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

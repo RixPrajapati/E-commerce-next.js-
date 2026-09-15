@@ -22,3 +22,8 @@ export const createProduct = async (data) => {
 export const updateProduct = async (id,data) => {
   return await api.put(`${config.appUrl}/api/products/${id}`, data);
 };
+
+export const deleteProduct = async (id) => {
+  console.log(id)
+  return await api.delete(`${config.appUrl}/api/products/${id}`);
+};
