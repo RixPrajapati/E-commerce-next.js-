@@ -1,8 +1,10 @@
 "use client";
 
 import { getProducts } from "@/api/products";
+import { PRODUCT_MANAGEMENT_ROUTE } from "@/constants/routes";
 import { format } from "date-fns";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { FaCog, FaEye, FaImage, FaTrash } from "react-icons/fa";
 import { FaPencil } from "react-icons/fa6";
@@ -48,7 +50,7 @@ const ProductsTable = () => {
         </thead>
         <tbody>
           {products.map((product) => (
-            <tr className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+            <tr key={product._id} className="border-b border-gray-200 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
               <th
                 scope="row"
                 className="flex items-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -90,8 +92,10 @@ const ProductsTable = () => {
               </td>
               <td className="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                 <div className="flex gap-2">
-                  <FaPencil className="text-blue-600" />
-                  <FaTrash className="text-red-600"/>
+                  <Link href={`${PRODUCT_MANAGEMENT_ROUTE}/${product._id}/edit`}>
+                    <FaPencil className="text-blue-600" />
+                  </Link>
+                  <FaTrash className="text-red-600" />
                 </div>
               </td>
             </tr>

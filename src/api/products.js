@@ -8,6 +8,10 @@ export const getProducts = async (searchParam) => {
   const res = await axios.get(`${config.appUrl}/api/products?limit=100&${query}`);
   return res.data;
 };
+export const getProductsById = async (id) => {
+  const res = await axios.get(`${config.appUrl}/api/products/${id}`);
+  return res.data;
+};
 
 export const createProduct = async (data) => {
   return await api.post(`${config.appUrl}/api/products`, data);

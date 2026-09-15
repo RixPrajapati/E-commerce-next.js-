@@ -8,8 +8,10 @@ import { useForm } from "react-hook-form";
 import { FaCloudArrowUp } from "react-icons/fa6";
 import { toast } from "react-toastify";
 
-const ProductForm = () => {
-  const { register, handleSubmit, reset } = useForm();
+const ProductForm = ({product}) => {
+  const { register, handleSubmit, reset } = useForm({
+    values:product
+  });
 
   const [loading, setLoading] = useState(false);
   const [productImages, setProductImages] = useState([]);
