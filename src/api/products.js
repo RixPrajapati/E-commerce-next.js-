@@ -4,7 +4,9 @@ import api from "./api";
 
 export const getProducts = async (searchParam) => {
   let query='';
-  if(searchParam?.userId) query+=`createdBy=${userId}`
+  console.log(searchParam)
+  if(searchParam?.userId) query+=`createdBy=${searchParam?.userId}`
+  console.log(query)
   const res = await axios.get(`${config.appUrl}/api/products?limit=100&${query}`);
   return res.data;
 };

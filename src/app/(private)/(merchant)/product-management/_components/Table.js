@@ -3,6 +3,7 @@
 import { getProducts } from "@/api/products";
 import Spinner from "@/components/Spinner";
 import { PRODUCT_MANAGEMENT_ROUTE } from "@/constants/routes";
+import useAuthStore from "@/stores/authstore";
 import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,10 +14,11 @@ import { FaPencil } from "react-icons/fa6";
 const ProductsTable = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const {user}=useAuthStore.getState();
 
   useEffect(() => {
     setLoading(true);
-    getProducts()
+    getProducts({userId:user.id})
       .then((data) => {
         setProducts(data);
       })
