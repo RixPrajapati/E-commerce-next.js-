@@ -16,3 +16,7 @@ export const getProductsById = async (id) => {
 export const createProduct = async (data) => {
   return await api.post(`${config.appUrl}/api/products`, data);
 };
+
+export const updateProduct = async (id,data) => {
+  return await api.put(`${config.appUrl}/api/products/${id}`, data);
+};

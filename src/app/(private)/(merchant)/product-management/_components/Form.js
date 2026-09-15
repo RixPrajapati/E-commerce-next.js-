@@ -1,6 +1,6 @@
 "use client";
 
-import { createProduct } from "@/api/products";
+import { createProduct, updateProduct } from "@/api/products";
 import Spinner from "@/components/Spinner";
 import Image from "next/image";
 import { useState } from "react";
@@ -8,9 +8,9 @@ import { useForm } from "react-hook-form";
 import { FaCloudArrowUp } from "react-icons/fa6";
 import { toast } from "react-toastify";
 
-const ProductForm = ({product}) => {
+const ProductForm = ({ product, isEditing = false }) => {
   const { register, handleSubmit, reset } = useForm({
-    values:product
+    values: product,
   });
 
   const [loading, setLoading] = useState(false);
@@ -36,16 +36,28 @@ const ProductForm = ({product}) => {
     return fromData;
   }
 
+  const upsertProduct = async (input) => {
+    if (isEditing) {
+      updateProduct(product._id,input);
+    } else {
+      createProduct(input);
+    }
+  };
+
   function formSubmit(data) {
     setLoading(true);
     const input = prepareData(data);
 
-    createProduct(input)
+    upsertProduct(input)
       .then((res) => {
-        toast.success("Product added successfully.");
-        setProductImages([]);
-        setLocalImageUrls([]);
-        reset();
+        if (isEditing) {
+          toast.success("Product updated successfully.");
+        } else {
+          toast.success("Product added successfully.");
+          setProductImages([]);
+          setLocalImageUrls([]);
+          reset();
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -217,7 +229,7 @@ const ProductForm = ({product}) => {
         className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary rounded-lg focus:ring-4 focus:ring-primary/20 dark:focus:ring-primary-900 hover:bg-primary/90 relative disabled:opacity-60 disabled:w-35"
         disabled={loading}
       >
-        Add product
+        {isEditing?"Update product":"Add product"}
         {loading && (
           <Spinner className="absolute top-1/2 -translate-y-1/2 right-3 w-6! h-6! fill-primary" />
         )}{" "}

@@ -1,4 +1,3 @@
-import React from "react";
 import ProductsTable from "./_components/Table";
 import Link from "next/link";
 import { PRODUCT_MANAGEMENT_ADD_ROUTE } from "@/constants/routes";
