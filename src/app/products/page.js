@@ -1,4 +1,4 @@
-import { getProducts } from "@/api/products";
+import { getBrands, getCategories, getProducts } from "@/api/products";
 import Link from "next/link";
 import ProductsCard from "./_components/Card";
 import { LoadingCard } from "./loading";
@@ -10,6 +10,8 @@ export const metadata = {
 
 const ProductPage = async ({ searchParams }) => {
   const products = await getProducts(await searchParams);
+  const categories = await getCategories();
+  const brands = await getBrands();
   // console.log(products);
   // console.log(await searchParams);
 
@@ -19,7 +21,7 @@ const ProductPage = async ({ searchParams }) => {
         Featured products
       </h2>
       <div className="gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_3fr] xl:grid-col-[1fr_3fr]">
-        <Filters/>
+        <Filters categories={categories} brands={brands}/>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
           {products.map((product, index) => (
             <ProductsCard {...product} key={index} />

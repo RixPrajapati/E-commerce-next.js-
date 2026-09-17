@@ -10,7 +10,7 @@ const DEFAULT_MAX_PRICE = 1000000000;
 const DEFAULT_CATEGORY = "";
 const DEFAULT_BRANDS = [];
 
-const Filters = () => {
+const Filters = ({ brands, categories }) => {
   const [sort, setSort] = useState(DEFAULT_SORT);
   const [minPrice, setMinPrice] = useState(DEFAULT_MIN_PRICE);
   const [maxPrice, setMaxPrice] = useState(DEFAULT_MAX_PRICE);
@@ -18,23 +18,22 @@ const Filters = () => {
   const [brandsFilter, setBrandsFilter] = useState(DEFAULT_BRANDS);
   const [search, setSearch] = useState("");
 
-  const router=useRouter();
+  const router = useRouter();
 
   const applyFilter = () => {
-    const params=new URLSearchParams();
+    const params = new URLSearchParams();
 
-    params.set("sort",sort);
-    params.set("min",minPrice);
-    params.set("max",maxPrice);
-    params.set("category",categoryFilter);
-    params.set("brands",brandsFilter.join(','));
+    params.set("sort", sort);
+    params.set("min", minPrice);
+    params.set("max", maxPrice);
+    params.set("category", categoryFilter);
+    params.set("brands", brandsFilter.join(","));
 
-    router.push(`?${params.toString()}`)
+    router.push(`?${params.toString()}`);
   };
 
-  const resetFilter = () =>{
-
-    router.replace(PRODUCTS_ROUTE)
+  const resetFilter = () => {
+    router.replace(PRODUCTS_ROUTE);
   };
 
   const handleBrandsFilter = (brand) => {
@@ -104,63 +103,42 @@ const Filters = () => {
           onChange={(event) => setCategoryFilter(event.target.value)}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
         >
-          <option value="Smartphone">Smartphone</option>
-          <option value="Smartphones">Smartphones</option>
-          <option value="Laptop">Laptop</option>
+          <option value="" selected>
+            Select Category
+          </option>
+          {categories.map((category) => (
+            <option value={category}>{category}</option>
+          ))}
         </select>
       </div>
 
       <div className="py-2">
         <h4>Brands :</h4>
-        <div className="flex items-center mb-1">
-          <input
-            id="Samsung"
-            type="checkbox"
-            defaultValue
-            className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
-            onChange={() => handleBrandsFilter("Samsung")}
-          />
-          <label
-            htmlFor="Samsung"
-            className="select-none ms-2 text-sm font-medium text-heading"
-          >
-            Samsung
-          </label>
-        </div>
-        <div className="flex items-center mb-1">
-          <input
-            id="Apple"
-            type="checkbox"
-            defaultValue
-            onChange={() => handleBrandsFilter("Apple")}
-            className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
-          />
-          <label
-            htmlFor="Apple"
-            className="select-none ms-2 text-sm font-medium text-heading"
-          >
-            Apple
-          </label>
-        </div>
-        <div className="flex items-center mb-1">
-          <input
-            id="LG"
-            type="checkbox"
-            defaultValue
-            onChange={() => handleBrandsFilter("LG")}
-            className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
-          />
-          <label
-            htmlFor="LG"
-            className="select-none ms-2 text-sm font-medium text-heading"
-          >
-            LG
-          </label>
-        </div>
+        {brands.map((brand) => (
+          <div className="flex items-center mb-1">
+            <input
+              id={brand}
+              type="checkbox"
+              defaultValue
+              className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft"
+              onChange={() => handleBrandsFilter(brand)}
+            />
+            <label
+              htmlFor={brand}
+              className="select-none ms-2 text-sm font-medium text-heading"
+            >
+              {brand}
+            </label>
+          </div>
+        ))}
       </div>
 
       <div className="grid grid-cols-2 gap-3 pt-4">
-        <button type="button" onClick={resetFilter} className="bg-red-600 w-full py-2 text-white rounded-xl">
+        <button
+          type="button"
+          onClick={resetFilter}
+          className="bg-red-600 w-full py-2 text-white rounded-xl"
+        >
           Reset
         </button>
         <button

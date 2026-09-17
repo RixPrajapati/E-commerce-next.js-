@@ -25,6 +25,16 @@ export const updateProduct = async (id,data) => {
 };
 
 export const deleteProduct = async (id) => {
-  console.log(id)
+  // console.log(id)
   return await api.delete(`${config.appUrl}/api/products/${id}`);
+};
+
+
+export const getCategories = async () => {
+  const res = await axios.get(`${config.appUrl}/api/products/categories`);
+  return res.data;
+};
+export const getBrands = async () => {
+  const res = await axios.get(`${config.appUrl}/api/products/brands`);
+  return res.data;
 };
