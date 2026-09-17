@@ -19,8 +19,8 @@ const ProductsTable = () => {
   const { user } = useAuthStore.getState();
   const router = useRouter();
 
-  function fetchProducts(){
-setLoading(true);
+  function fetchProducts() {
+    setLoading(true);
     getProducts({ createdBy: user.id })
       .then((data) => {
         setProducts(data);
@@ -131,13 +131,15 @@ setLoading(true);
                       type="button"
                       onClick={() => {
                         if (confirm("Are sure you want to delete?"))
-                          deleteProduct(product._id).then(() => {
-                            toast.success("Product deleted successfully");
-                            fetchProducts();
-                          }).catch((err)=>{
-                            console.log(err);
-                            toast.error(err.response.data)
-                          });
+                          deleteProduct(product._id)
+                            .then(() => {
+                              toast.success("Product deleted successfully");
+                              fetchProducts();
+                            })
+                            .catch((err) => {
+                              console.log(err);
+                              toast.error(err.response.data);
+                            });
                       }}
                     >
                       <FaTrash className="text-red-600" />

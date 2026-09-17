@@ -1,5 +1,6 @@
 "use client";
 
+import { PRODUCTS_ROUTE } from "@/constants/routes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -29,6 +30,11 @@ const Filters = () => {
     params.set("brands",brandsFilter.join(','));
 
     router.push(`?${params.toString()}`)
+  };
+
+  const resetFilter = () =>{
+
+    router.replace(PRODUCTS_ROUTE)
   };
 
   const handleBrandsFilter = (brand) => {
@@ -154,7 +160,7 @@ const Filters = () => {
       </div>
 
       <div className="grid grid-cols-2 gap-3 pt-4">
-        <button className="bg-red-600 w-full py-2 text-white rounded-xl">
+        <button type="button" onClick={resetFilter} className="bg-red-600 w-full py-2 text-white rounded-xl">
           Reset
         </button>
         <button
