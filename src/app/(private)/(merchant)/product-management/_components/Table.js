@@ -21,7 +21,7 @@ const ProductsTable = () => {
 
   function fetchProducts(){
 setLoading(true);
-    getProducts({ userId: user.id })
+    getProducts({ createdBy: user.id })
       .then((data) => {
         setProducts(data);
       })
