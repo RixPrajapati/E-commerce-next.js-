@@ -28,6 +28,7 @@ const Filters = ({ brands, categories }) => {
     params.set("max", maxPrice);
     params.set("category", categoryFilter);
     params.set("brands", brandsFilter.join(","));
+    params.set('name',search);
 
     router.push(`?${params.toString()}`);
   };
@@ -46,6 +47,16 @@ const Filters = ({ brands, categories }) => {
 
   return (
     <div className="hidden md:block shadow-md rounded-2xl py-5 px-4">
+      <div className="py-2">
+        <h4 className="font-semibold">Search:</h4>
+        <input
+          type="text"
+          name="name"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+          placeholder="Search products..."
+          onChange={(event) => setSearch(event.target.value)}
+        />
+      </div>
       <h3 className="font-semibold text-xl">Product Filter</h3>
       <div className="py-2">
         <h4>Sort by:</h4>
