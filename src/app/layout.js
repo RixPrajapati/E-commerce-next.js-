@@ -16,8 +16,9 @@ export const metadata={
 const RootLayout = ({children}) => {
   return (
     <html lang='en'>
-      <body className='light'>
+      <body>
         <MainLayout>
+           <Header />
           {children}
         </MainLayout>
         <ToastContainer position='top-center' autoClose={1500} />

@@ -22,7 +22,7 @@ const ProductPage = async ({ searchParams }) => {
       </h2>
       <div className="gap-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_3fr] xl:grid-col-[1fr_3fr]">
         <Filters categories={categories} brands={brands}/>
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="self-start grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
           {products.map((product, index) => (
             <ProductsCard {...product} key={index} />
           ))}

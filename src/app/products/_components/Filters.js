@@ -46,7 +46,7 @@ const Filters = ({ brands, categories }) => {
   };
 
   return (
-    <div className="hidden md:block shadow-md rounded-2xl py-5 px-4">
+    <div className="self-start sticky top-20 hidden md:block shadow-md rounded-2xl py-5 px-4">
       <div className="py-2">
         <h4 className="font-semibold">Search:</h4>
         <input

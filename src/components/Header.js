@@ -7,9 +7,11 @@ import logo from "@/assets/images/logo.jpg";
 import Image from "next/image";
 import useAuthStore from "@/stores/authstore";
 import { useEffect } from "react";
+import usePreferenceStore from "@/stores/preferenceStore";
 
 const Header = () => {
   const { isAuthentication, logoutUser } = useAuthStore.getState();
+  const { toggleTheme, theme } = usePreferenceStore.getState();
   const pathName = usePathname();
   const router= useRouter();
 
@@ -18,7 +20,7 @@ const Header = () => {
     router.push(LOGIN_ROUTE);
   }
 
-  useEffect(() => {}, [isAuthentication]);
+  useEffect(() => {}, [isAuthentication,theme]);
 
   return (
     <header className="py-4 shadow-md bg-white dark:bg-gray-950 sticky top-0 z-10">
@@ -56,16 +58,12 @@ const Header = () => {
           <div className="flex items-center gap-4">
             <button
               id="lightThemeSwitcher"
-              className="hidden dark:block px-2 py-1.5 rounded-full bg-gray-100 dark:bg-gray-700"
+              onClick={toggleTheme}
+              className="px-2 py-1.5 rounded-full bg-gray-100 dark:bg-gray-700"
             >
-              🌞
+              {theme=="light"?"🌞":"🌙"}
             </button>
-            <button
-              id="darkThemeSwitcher"
-              className="dark:hidden px-2 py-1.5 rounded-full bg-gray-100 dark:bg-gray-700"
-            >
-              🌙
-            </button>
+            
             {isAuthentication ? (
               <>
                 <button className="px-4 pt-1 pb-2 rounded-3xl bg-gray-100 dark:bg-gray-700 h-auto">
