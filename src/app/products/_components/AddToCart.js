@@ -2,13 +2,20 @@
 
 import useCartStore from "@/stores/cartStore";
 import React from "react";
+import { toast } from "react-toastify";
 
 const AddToCart = ({ product }) => {
   const { addToCart } = useCartStore.getState();
+
+    function handleAddToCart(){
+        addToCart(product);
+        toast.success("Add to cart successful")
+    }
+
   return (
     <button
-    onClick={()=>addToCart(product)}
-    className="bg-primary px-4 py-2 w-full text-center rounded-3xl mt-2 text-sm font-medium transition duration-300 ease text-white">
+    onClick={handleAddToCart}
+    className="bg-primary cursor-pointer px-4 py-2 w-full text-center rounded-3xl mt-2 text-sm font-medium transition duration-300 ease text-white">
       Add to Cart
     </button>
   );

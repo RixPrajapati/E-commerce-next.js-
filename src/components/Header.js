@@ -1,6 +1,6 @@
 "use client";
 
-import { HOME_ROUTE, LOGIN_ROUTE, navMenu } from "@/constants/routes.js";
+import { CART_ROUTE, HOME_ROUTE, LOGIN_ROUTE, navMenu } from "@/constants/routes.js";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import logo from "@/assets/images/logo.jpg";
@@ -8,19 +8,22 @@ import Image from "next/image";
 import useAuthStore from "@/stores/authstore";
 import { useEffect } from "react";
 import usePreferenceStore from "@/stores/preferenceStore";
+import useCartStore from "@/stores/cartStore";
 
 const Header = () => {
   const { isAuthentication, logoutUser } = useAuthStore.getState();
-  const { toggleTheme, theme } = usePreferenceStore.getState();
+  const { toggleTheme } = usePreferenceStore.getState();
+  const theme = usePreferenceStore((state) => state.theme);
+  const products = useCartStore((state) => state.products);
   const pathName = usePathname();
-  const router= useRouter();
+  const router = useRouter();
 
   function handleLogout() {
     logoutUser();
     router.push(LOGIN_ROUTE);
   }
 
-  useEffect(() => {}, [isAuthentication,theme]);
+  useEffect(() => {}, [isAuthentication, theme]);
 
   return (
     <header className="py-4 shadow-md bg-white dark:bg-gray-950 sticky top-0 z-10">
@@ -61,18 +64,19 @@ const Header = () => {
               onClick={toggleTheme}
               className="px-2 py-1.5 rounded-full bg-gray-100 dark:bg-gray-700"
             >
-              {theme=="light"?"🌞":"🌙"}
+              {theme == "light" ? "🌙" : "🌞"}
             </button>
-            
+
             {isAuthentication ? (
               <>
-                <button className="px-4 pt-1 pb-2 rounded-3xl bg-gray-100 dark:bg-gray-700 h-auto">
+                <Link href={CART_ROUTE} className="px-4 pt-1 pb-2 rounded-3xl bg-gray-100 dark:bg-gray-700 h-auto">
                   🛒
                   <span className="bg-primary px-2 py-0.5 text-xs rounded-xl text-white">
-                    5
+                    {products.length}
                   </span>
-                </button>
-                <button type="button"
+                </Link>
+                <button
+                  type="button"
                   className="bg-primary-dark text-white rounded-xl px-5 py-1.5 hover:bg-primary"
                   onClick={handleLogout}
                 >

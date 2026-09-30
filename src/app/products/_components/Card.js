@@ -3,18 +3,25 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import AddToCart from "./AddToCart";
+import { FaImage } from "react-icons/fa";
 
 const ProductsCard = ({ product }) => {
   const { name, brand, category, price, _id, imageUrls } = product;
   return (
     <div className="product-card">
-      <Image
-        className="w-full h-40 object-cover"
-        src={imageUrls[0]}
-        alt={`${name} image`}
-        width={400}
-        height={300}
-      />
+      {imageUrls.length > 0 ? (
+        <Image
+          className="w-full h-40 object-cover"
+          src={imageUrls[0]}
+          alt={`${name} image`}
+          width={400}
+          height={300}
+        />
+      ) : (
+        <div className="w-full h-40 flex items-center justify-center bg-primary/10">
+          <FaImage className="text-7xl text-gray-500"/>
+        </div>
+      )}
       <div className="bg-white dark:bg-gray-900 pt-3 px-4 pb-4">
         <span className="bg-accent text-white text-xs font-medium px-1.5 py-0.5 rounded">
           {category}
