@@ -24,7 +24,7 @@ const ProductPage = async ({ searchParams }) => {
         <Filters categories={categories} brands={brands}/>
         <div className="self-start grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
           {products.map((product, index) => (
-            <ProductsCard {...product} key={index} />
+            <ProductsCard product={product} key={index} />
           ))}
         </div>
       </div>

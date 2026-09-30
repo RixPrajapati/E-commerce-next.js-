@@ -28,7 +28,7 @@ const Filters = ({ brands, categories }) => {
     params.set("max", maxPrice);
     params.set("category", categoryFilter);
     params.set("brands", brandsFilter.join(","));
-    params.set('name',search);
+    params.set("name", search);
 
     router.push(`?${params.toString()}`);
   };
@@ -117,16 +117,18 @@ const Filters = ({ brands, categories }) => {
           <option value="" selected>
             Select Category
           </option>
-          {categories.map((category) => (
-            <option value={category}>{category}</option>
+          {categories.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
           ))}
         </select>
       </div>
 
       <div className="py-2">
         <h4>Brands :</h4>
-        {brands.map((brand) => (
-          <div className="flex items-center mb-1">
+        {brands.map((brand, index) => (
+          <div key={index} className="flex items-center mb-1">
             <input
               id={brand}
               type="checkbox"

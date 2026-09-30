@@ -2,8 +2,10 @@ import { PRODUCTS_ROUTE } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import AddToCart from "./AddToCart";
 
-const ProductsCard = ({ name, brand, category, price, _id, imageUrls }) => {
+const ProductsCard = ({ product }) => {
+  const { name, brand, category, price, _id, imageUrls } = product;
   return (
     <div className="product-card">
       <Image
@@ -27,12 +29,13 @@ const ProductsCard = ({ name, brand, category, price, _id, imageUrls }) => {
         </p>
         <p className="my-1 font-bold text-2xl text-primary">{price}</p>
         <div className="grid grid-cols-[auto_1fr] justify-between items-center gap-4">
-          <Link href={`${PRODUCTS_ROUTE}/${_id}`} className="px-10 bg-background dark:bg-gray-800 py-2 w-full text-center rounded-3xl mt-2 text-sm font-medium transition duration-300 ease hover:text-primary dark:text-gray-300">
+          <Link
+            href={`${PRODUCTS_ROUTE}/${_id}`}
+            className="px-10 bg-background dark:bg-gray-800 py-2 w-full text-center rounded-3xl mt-2 text-sm font-medium transition duration-300 ease hover:text-primary dark:text-gray-300"
+          >
             View
           </Link>
-          <button className="bg-primary px-4 py-2 w-full text-center rounded-3xl mt-2 text-sm font-medium transition duration-300 ease text-white">
-            Add to Cart
-          </button>
+          <AddToCart product={product} />
         </div>
       </div>
     </div>
