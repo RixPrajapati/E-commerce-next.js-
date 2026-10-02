@@ -7,6 +7,7 @@ export const LOGIN_ROUTE= '/login';
 export const REGISTER_ROUTE= '/register';
 export const CART_ROUTE= '/cart';
 // export const REGISTER_ROUTE= '/forget-password';
+export const ORDERS_ROUTE = "/orders";
 
 
 //Admin routes
