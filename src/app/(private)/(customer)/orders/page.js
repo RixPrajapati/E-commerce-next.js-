@@ -6,6 +6,7 @@ import OrderTable from "./_component/OrderTable";
 import { format } from "date-fns";
 import Spinner from "@/components/Spinner";
 import { toast } from "react-toastify";
+import { ORDER_PENDING } from "@/constants/orderStatus";
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
@@ -63,12 +64,14 @@ const OrderPage = () => {
               <p className="">Rs. {order.totalPrice}</p>
             </div>
             <div className="flex items-center gap-5">
-              <button
-                className="bg-red-600 text-white px-4 py-2 rounded-md shadow"
-                onClick={() => handleCancelOrder(order._id)}
-              >
-                Cancel order
-              </button>
+              {order.status == ORDER_PENDING && (
+                <button
+                  className="bg-red-600 text-white px-4 py-2 rounded-md shadow"
+                  onClick={() => handleCancelOrder(order._id)}
+                >
+                  Cancel order
+                </button>
+              )}
               <button>Confirm payment</button>
             </div>
           </div>
