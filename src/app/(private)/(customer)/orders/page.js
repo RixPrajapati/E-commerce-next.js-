@@ -63,17 +63,22 @@ const OrderPage = () => {
               <h3 className="text-gray-500">Total amount</h3>
               <p className="">Rs. {order.totalPrice}</p>
             </div>
-            <div className="flex items-center gap-5">
-              {order.status == ORDER_PENDING && (
+            {order.status == ORDER_PENDING && (
+              <div className="flex items-center gap-5">
                 <button
                   className="bg-red-600 text-white px-4 py-2 rounded-md shadow"
                   onClick={() => handleCancelOrder(order._id)}
                 >
                   Cancel order
                 </button>
-              )}
-              <button>Confirm payment</button>
-            </div>
+                <button
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md shadow"
+                  onClick={() => console.log("button clicked")}
+                >
+                  Confirm payment
+                </button>
+              </div>
+            )}
           </div>
           <OrderTable key={index} order={order} />
         </div>
