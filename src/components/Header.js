@@ -1,17 +1,22 @@
 "use client";
 
-import { CART_ROUTE, HOME_ROUTE, LOGIN_ROUTE, navMenu } from "@/constants/routes.js";
+import {
+  CART_ROUTE,
+  HOME_ROUTE,
+  LOGIN_ROUTE,
+  navMenu,
+} from "@/constants/routes.js";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import logo from "@/assets/images/logo.jpg";
 import Image from "next/image";
 import useAuthStore from "@/stores/authstore";
-import { useEffect } from "react";
 import usePreferenceStore from "@/stores/preferenceStore";
 import useCartStore from "@/stores/cartStore";
 
 const Header = () => {
-  const { isAuthentication, logoutUser } = useAuthStore.getState();
+  const isAuthentication = useAuthStore((state) => state.isAuthentication);
+  const logoutUser = useAuthStore((state) => state.logoutUser);
   const { toggleTheme } = usePreferenceStore.getState();
   const theme = usePreferenceStore((state) => state.theme);
   const products = useCartStore((state) => state.products);
@@ -23,7 +28,6 @@ const Header = () => {
     router.push(LOGIN_ROUTE);
   }
 
-  useEffect(() => {}, [isAuthentication, theme]);
 
   return (
     <header className="py-4 shadow-md bg-white dark:bg-gray-950 sticky top-0 z-10">
@@ -69,7 +73,10 @@ const Header = () => {
 
             {isAuthentication ? (
               <>
-                <Link href={CART_ROUTE} className="px-4 pt-1 pb-2 rounded-3xl bg-gray-100 dark:bg-gray-700 h-auto">
+                <Link
+                  href={CART_ROUTE}
+                  className="px-4 pt-1 pb-2 rounded-3xl bg-gray-100 dark:bg-gray-700 h-auto"
+                >
                   🛒
                   <span className="bg-primary px-2 py-0.5 text-xs rounded-xl text-white">
                     {products.length}

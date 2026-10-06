@@ -22,3 +22,6 @@ export const payViaKhalti=async(id)=>{
 export const payViaCash=async(id)=>{
     return await api.put(`/api/orders/${id}/payment/cash`)
 }
+export const confirmOrder=async(id,status)=>{
+    return await api.patch(`/api/orders/${id}/confirm`,{status: status})
+}
