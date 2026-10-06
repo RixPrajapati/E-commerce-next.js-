@@ -9,13 +9,26 @@ import { toast } from "react-toastify";
 import { ORDER_PENDING } from "@/constants/orderStatus";
 import PayViaKhalti from "./_component/PayViaKhalti";
 import PayViaCash from "./_component/PayViaCash";
+import OrderStatus from "./_component/OrderStatus";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ORDERS_ROUTE } from "@/constants/routes";
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
+   const searchParams = useSearchParams();
+
+  const orderStatus = searchParams.get("status");
+
+  const router = useRouter();
+
+  function handleStatusChange(status) {
+    router.push(`${ORDERS_ROUTE}?status=${status}`);
+  }
+
   useEffect(() => {
-    getOrdersByUser()
+    getOrdersByUser(orderStatus ?? "")
       .then((res) => setOrders(res.data))
       .catch((error) => {
         console.log(error);
@@ -23,7 +36,7 @@ const OrderPage = () => {
         throw error;
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [orderStatus]);
 
   function handleCancelOrder(orderId) {
     if (confirm("Are you sure?")) {
@@ -43,15 +56,34 @@ const OrderPage = () => {
     );
 
   return (
-    <div>
+    <div className="dark:text-white">
+      <label
+        htmlFor="status"
+        className=" mb-2.5 text-sm font-medium text-heading mr-2"
+      >
+        Filter by status:
+      </label>
+      <select
+        id="countries"
+        className="mb-10 w-max px-3 py-2.5 border border-gray-200 text-heading text-sm rounded-md focus:ring-brand focus:border-brand shadow-xs placeholder:text-body"
+        onChange={(e) => handleStatusChange(e.target.value)}
+        defaultValue={orderStatus}
+      >
+        <option value="" selected>
+          All
+        </option>
+        <option value="PENDING">Pending</option>
+        <option value="CONFIRMED">Confirmed</option>
+        <option value="SHIPPED">Shipped</option>
+        <option value="DELIVERED">Delivered</option>
+        <option value="CANCELLED">Cancelled</option>
+      </select>
       {orders.map((order, index) => (
         <div key={index} className="mb-12">
-          <div className="grid grid-cols-1 lg:grid-cols-[auto_auto_auto_auto_1fr] bg-gray-100 px-6 py-4 rounded-xl gap-5 text-sm lg:justify-items-end items-center">
+          <div className="grid dark:bg-gray-700 grid-cols-1 lg:grid-cols-[auto_auto_auto_auto_1fr] bg-gray-100 px-6 py-4 rounded-xl gap-5 text-sm lg:justify-items-end items-center">
             <div>
               <h3 className="text-gray-500">Status</h3>
-              <span className="bg-blue-500/10 text-blue-500 text-xs font-medium px-3 py-0.5 rounded">
-                {order.status}
-              </span>
+              <OrderStatus status={order.status}/>
             </div>
             <div>
               <h3 className="text-gray-500">Date Placed</h3>

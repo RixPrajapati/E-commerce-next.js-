@@ -3,8 +3,8 @@ import api from "./api"
 export const getOrdersById=async(id)=>{
     return await api.get(`/api/orders/${id}`);
 }
-export const getOrdersByUser=async()=>{
-    return await api.get(`/api/orders/user`);
+export const getOrdersByUser=async(status)=>{
+    return await api.get(`/api/orders/user?status=${status}`);
 }
 export const getOrdersByMerchant=async(id)=>{
     return await api.get(`/api/orders/merchant`);
