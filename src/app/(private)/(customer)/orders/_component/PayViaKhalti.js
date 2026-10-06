@@ -31,7 +31,7 @@ const PayViaKhalti = ({ orderId }) => {
         width={100}
         className="h-5 w-auto"
       />
-      {loading && <Spinner className="h-5! w-5! fill-primary-600!" />}
+      {loading && <Spinner className="h-5! w-5! fill-primary!" />}
     </button>
   );
 };

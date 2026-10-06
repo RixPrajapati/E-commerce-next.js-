@@ -33,7 +33,7 @@ const OrderConfirmationPage = () => {
   });
 
   return <div className="flex items-center justify-center py-24">
-    <Spinner className="fill-primary-600!"/>
+    <Spinner className="fill-primary!"/>
   </div>;
 };
 
