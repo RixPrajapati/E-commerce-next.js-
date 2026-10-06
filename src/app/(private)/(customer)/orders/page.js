@@ -8,6 +8,7 @@ import Spinner from "@/components/Spinner";
 import { toast } from "react-toastify";
 import { ORDER_PENDING } from "@/constants/orderStatus";
 import PayViaKhalti from "./_component/PayViaKhalti";
+import PayViaCash from "./_component/PayViaCash";
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
@@ -73,6 +74,7 @@ const OrderPage = () => {
                   Cancel order
                 </button>
                 <PayViaKhalti orderId={order._id}/>
+                <PayViaCash orderId={order._id}/>
               </div>
             )}
           </div>
