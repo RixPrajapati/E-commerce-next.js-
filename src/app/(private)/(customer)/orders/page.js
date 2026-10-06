@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import Spinner from "@/components/Spinner";
 import { toast } from "react-toastify";
 import { ORDER_PENDING } from "@/constants/orderStatus";
+import PayViaKhalti from "./_component/PayViaKhalti";
 
 const OrderPage = () => {
   const [orders, setOrders] = useState([]);
@@ -43,8 +44,8 @@ const OrderPage = () => {
   return (
     <div>
       {orders.map((order, index) => (
-        <div className="mb-12">
-          <div className="grid grid-cols-1 md:grid-cols-[auto_auto_auto_auto_1fr] bg-gray-100 px-6 py-4 rounded-xl gap-5 text-sm md:justify-items-end items-center">
+        <div key={index} className="mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-[auto_auto_auto_auto_1fr] bg-gray-100 px-6 py-4 rounded-xl gap-5 text-sm lg:justify-items-end items-center">
             <div>
               <h3 className="text-gray-500">Status</h3>
               <span className="bg-blue-500/10 text-blue-500 text-xs font-medium px-3 py-0.5 rounded">
@@ -71,12 +72,7 @@ const OrderPage = () => {
                 >
                   Cancel order
                 </button>
-                <button
-                  className="bg-blue-600 text-white px-4 py-2 rounded-md shadow"
-                  onClick={() => console.log("button clicked")}
-                >
-                  Confirm payment
-                </button>
+                <PayViaKhalti orderId={order._id}/>
               </div>
             )}
           </div>

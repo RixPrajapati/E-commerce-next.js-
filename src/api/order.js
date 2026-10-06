@@ -15,3 +15,10 @@ export const createOrder=async(data)=>{
 export const cancelOrder=async(id)=>{
     return await api.patch(`/api/orders/${id}/cancel`);
 }
+
+export const payViaKhalti=async(id)=>{
+    return await api.put(`/api/orders/${id}/payment/khalti`)
+}
+export const payViaCash=async(id)=>{
+    return await api.put(`/api/orders/${id}/payment/cash`)
+}

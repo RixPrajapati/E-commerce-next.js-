@@ -1,6 +1,7 @@
 import { PRODUCTS_ROUTE } from "@/constants/routes";
 import Image from "next/image";
 import Link from "next/link";
+import placeholder from "@/assets/images/placeholder.png";
 
 const OrderTable = ({ order }) => {
   return (
@@ -23,12 +24,12 @@ const OrderTable = ({ order }) => {
           </tr>
         </thead>
         <tbody>
-          {order.orderItems?.map((item) => (
-            <tr className="border-b border-gray-200 text-gray-700">
+          {order.orderItems?.map((item,index) => (
+            <tr key={index} className="border-b border-gray-200 text-gray-700">
               <td className="w-full px-6 py-4 font-semibold text-heading">
                 <div className="flex items-center gap-5">
                   <Image
-                    src={item.product.imageUrls[0]}
+                    src={item.product?.imageUrls?.[0] || placeholder}
                     alt=""
                     height={100}
                     width={100}
